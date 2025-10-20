@@ -29,15 +29,15 @@ class _FormScreenState extends State<FormScreen> {
             children: <Widget>[
               const Text(
                 'Mohon isi data di bawah ini untuk memulai proses diagnosis.',
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: 16, color: Colors.white70),
               ),
               const SizedBox(height: 24),
               TextFormField(
                 controller: _nameController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Nama Anak',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.person_outline),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  prefixIcon: const Icon(Icons.person_outline),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -49,10 +49,10 @@ class _FormScreenState extends State<FormScreen> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _ageController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Usia (Tahun)',
-                  border: OutlineInputBorder(),
-                   prefixIcon: Icon(Icons.cake_outlined),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  prefixIcon: const Icon(Icons.cake_outlined),
                 ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
@@ -68,10 +68,10 @@ class _FormScreenState extends State<FormScreen> {
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
                 value: _selectedGender,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Jenis Kelamin',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.wc_outlined),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  prefixIcon: const Icon(Icons.wc_outlined),
                 ),
                 items: ['Laki-laki', 'Perempuan']
                     .map((label) => DropdownMenuItem(
@@ -108,10 +108,7 @@ class _FormScreenState extends State<FormScreen> {
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(double.infinity, 50),
-                  textStyle: const TextStyle(fontSize: 18),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                  textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 child: const Text('Lanjutkan'),
               ),

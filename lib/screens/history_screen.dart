@@ -26,7 +26,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       _historyList = historyJson
           .map((item) => DiagnosisHistory.fromJson(json.decode(item)))
           .toList()
-          ..sort((a, b) => b.date.compareTo(a.date)); // Urutkan dari terbaru
+          ..sort((a, b) => b.date.compareTo(a.date));
     });
   }
 
@@ -34,7 +34,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
     final prefs = await SharedPreferences.getInstance();
     List<String> historyJson = prefs.getStringList('diagnosis_history') ?? [];
     
-    // Cari dan hapus item yang sesuai berdasarkan timestamp unik
     final itemToDelete = _historyList[index];
     historyJson.removeWhere((item) {
         final decodedItem = DiagnosisHistory.fromJson(json.decode(item));
@@ -66,7 +65,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               },
             ),
             TextButton(
-              child: const Text('Hapus', style: TextStyle(color: Colors.red)),
+              child: Text('Hapus', style: TextStyle(color: Colors.red[400])),
               onPressed: () {
                 _deleteHistory(index);
                 Navigator.of(context).pop();
@@ -84,7 +83,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Hapus Semua Riwayat'),
-          content: const Text('Apakah Anda yakin ingin menghapus semua riwayat diagnosis?'),
+          content: const Text('Tindakan ini tidak dapat diurungkan. Lanjutkan?'),
           actions: <Widget>[
             TextButton(
               child: const Text('Batal'),
@@ -93,7 +92,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               },
             ),
             TextButton(
-              child: const Text('Hapus Semua', style: TextStyle(color: Colors.red)),
+              child: Text('Hapus Semua', style: TextStyle(color: Colors.red[400])),
               onPressed: () {
                 _clearAllHistory();
                 Navigator.of(context).pop();
@@ -114,20 +113,20 @@ class _HistoryScreenState extends State<HistoryScreen> {
         actions: [
           if (_historyList.isNotEmpty)
             IconButton(
-              icon: const Icon(Icons.delete_sweep),
+              icon: const Icon(Icons.delete_sweep_outlined),
               onPressed: _showClearAllConfirmation,
               tooltip: 'Hapus Semua Riwayat',
             ),
         ],
       ),
       body: _historyList.isEmpty
-          ? const Center(
+          ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.history_toggle_off, size: 80, color: Colors.grey),
-                  SizedBox(height: 16),
-                  Text('Belum ada riwayat diagnosis.', style: TextStyle(fontSize: 16, color: Colors.grey)),
+                  Icon(Icons.history_toggle_off, size: 80, color: Colors.grey[700]),
+                  const SizedBox(height: 16),
+                  const Text('Belum ada riwayat diagnosis.', style: TextStyle(fontSize: 16, color: Colors.grey)),
                 ],
               ),
             )
@@ -138,17 +137,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 final history = _historyList[index];
                 return Card(
                   elevation: 3,
-                  margin: const EdgeInsets.symmetric(vertical: 6.0),
+                  margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   child: ListTile(
                     leading: CircleAvatar(
-                      backgroundColor: Colors.blue.shade100,
-                      child: Text(history.name[0].toUpperCase(), style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold)),
+                      backgroundColor: Colors.tealAccent[700],
+                      child: Text(history.name[0].toUpperCase(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                     ),
-                    title: Text(history.diagnosis, style: const TextStyle(fontWeight: FontWeight.bold)),
+                    title: Text(history.diagnosis, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.tealAccent[400])),
                     subtitle: Text(
                         '${history.name} | Usia: ${history.age} | ${history.gender}\n${history.date.toLocal().toString().split('.')[0]}'),
                     trailing: IconButton(
-                      icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+                      icon: Icon(Icons.delete_outline, color: Colors.red[300]),
                       onPressed: () => _showDeleteConfirmation(index),
                     ),
                   ),
