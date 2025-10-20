@@ -3,7 +3,16 @@ import '../expert_system.dart';
 import 'result_screen.dart';
 
 class DiagnosisScreen extends StatefulWidget {
-  const DiagnosisScreen({super.key});
+  final String name;
+  final int age;
+  final String gender;
+
+  const DiagnosisScreen({
+    super.key,
+    required this.name,
+    required this.age,
+    required this.gender,
+  });
 
   @override
   _DiagnosisScreenState createState() => _DiagnosisScreenState();
@@ -28,7 +37,12 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ResultScreen(diagnosisResult: result),
+        builder: (context) => ResultScreen(
+          name: widget.name,
+          age: widget.age,
+          gender: widget.gender,
+          diagnosisResult: result,
+        ),
       ),
     );
   }
